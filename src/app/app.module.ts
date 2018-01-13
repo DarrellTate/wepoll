@@ -1,3 +1,4 @@
+import { AuthGuard } from './auth-guard.service';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -11,8 +12,12 @@ import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './admin/users/users.component';
 import { AdminPollsComponent } from './admin/admin-polls/admin-polls.component';
 import { RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoginComponent } from './login/login.component';
+import { HttpModule } from '@angular/http';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AuthService } from './auth.service';
 
 @NgModule({
   declarations: [
@@ -30,18 +35,23 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule, 
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
+    AngularFireAuthModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
-      { path: 'polls', component: PollsComponent },
-      { path: 'profile', component: ProfileComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'admin/admin-polls', component: AdminPollsComponent },
-      { path: 'admin/users', component: UsersComponent }
       
+      { path: 'polls', component: PollsComponent, canActivate: [AuthGuard] },
+      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+     
+      { path: 'admin/admin-polls', component: AdminPollsComponent, canActivate: [AuthGuard] },
+      { path: 'admin/users', component: UsersComponent, canActivate: [AuthGuard] }
     ]),
     NgbModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

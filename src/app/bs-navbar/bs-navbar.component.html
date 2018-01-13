@@ -7,15 +7,23 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/profile">Profile</a>
+          <a class="nav-link" routerLink="/polls">Polls</a>
         </li>
-        <li ngbDropdown class="nav-item dropdown">
-          <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Username</a>
+        <ng-template #anonymousUser>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/login">Login</a>
+          </li>
+        </ng-template>
+        
+        <li ngbDropdown *ngIf="auth.user$ | async as user; else anonymousUser" class="nav-item dropdown">
+          <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ user.displayName }}
+          </a>
           <div  ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
-            <a class="dropdown-item" routerLink="/polls">Polls</a>
+            <a class="dropdown-item" routerLink="/profile">Profile</a>
             <a class="dropdown-item" routerLink="/admin/admin-polls">Manage Polls</a>
             <a class="dropdown-item" routerLink="/admin/users">Manage Users</a>
-            <a class="dropdown-item">Log Out</a>
+            <a (click)="logout()" class="dropdown-item">Log Out</a>
           </div>
         </li>
       </ul>
