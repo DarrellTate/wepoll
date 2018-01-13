@@ -2,9 +2,21 @@
 
 .navbar-default{
     color: white;
-    background-color:rgb(42, 146, 187);
+    background-color:rgb(26, 141, 170);
 }
 
 a:visited {
     color:white;
+}
+
+a:hover {
+    background-color: rgb(238, 121, 121);
+}
+
+.dropdown-menu {
+    background-color: rgb(26, 141, 170);
+}
+
+.dropdown-toggle {
+    cursor: pointer;
 }
