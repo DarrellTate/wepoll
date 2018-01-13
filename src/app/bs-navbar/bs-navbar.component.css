@@ -1,0 +1,10 @@
+/* Change navbar color scheme */
+
+.navbar-default{
+    color: white;
+    background-color:rgb(42, 146, 187);
+}
+
+a:visited {
+    color:white;
+}
